@@ -3,15 +3,15 @@ const nodemailer = require("nodemailer");
 const sendEmailWithResetToken = async (option) => {
   // create a transporter
   const transport = nodemailer.createTransport({
-    host: "smtp.mailtrap.io",
-    port: 2525,
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
     auth: {
-      user: "265fd262561863",
-      pass: "040e1504a3a84b",
+      user: process.env.EMAIL_AUTH_USER,
+      pass: process.env.EMAIL_AUTH_USER_PASSWORD,
     },
   });
+  
   //   define the option
-
   const mailOption = {
     from: "Shofiqul Islam Miraz <simiraz90@gmail.com>",
     to: option.email,

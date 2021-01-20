@@ -1,7 +1,6 @@
 const User = require("../models/usermodels");
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
-const { sendEmailWithResetToken } = require("../utils/email");
 
 // register and login validation by Joi
 const Joi = require("joi");
@@ -130,40 +129,38 @@ const restrict = async (req, res, next) => {
   next();
 };
 
-const forgotPassword = async (req, res) => {
-  try {
-    // finding the user With specified email
-    const user = await User.findOne({ email: req.body.email });
+// const forgotPassword = async (req, res) => {
+//   try {
+//     // finding the user With specified email
+//     const user = await User.findOne({ email: req.body.email });
 
-    if (!user) {
-      return res.status(404).send("No User Found With this email.");
-    }
+//     if (!user) {
+//       return res.status(404).send("No User Found With this email.");
+//     }
 
-    // generating a random string for reset token
-    const resetToken = user.createPasswordResetToken();
+//     // generating a random string for reset token
+//     const resetToken = user.createPasswordResetToken();
 
-    await user.save({ validateModifiedOnly: false });
+//     await user.save({ validateModifiedOnly: false });
 
-    // sending mail to user email with random token via nodemailer
-    const resetURL = `${req.protocol}://${req.get("host")}/`;
-  } catch (error) {
-    res.status(404).send(error);
-  }
-};
+//     // sending mail to user email with random token via nodemailer
+//     const resetURL = `${req.protocol}://${req.get("host")}/`;
+//   } catch (error) {
+//     res.status(404).send(error);
+//   }
+// };
 
-const resetPassword = (req, res) => {
-  try {
-    res.status(200).json({ status: "success" });
-  } catch (error) {
-    console.log(error);
-  }
-};
+// const resetPassword = (req, res) => {
+//   try {
+//     res.status(200).json({ status: "success" });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 module.exports = {
   register,
   login,
   protect,
   restrict,
-  forgotPassword,
-  resetPassword,
 };

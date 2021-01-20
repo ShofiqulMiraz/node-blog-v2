@@ -10,10 +10,10 @@ const { protect, restrict } = require("../controllers/usercontroller");
 
 const postRoutes = express.Router();
 
-postRoutes.route("/").post(createPost).get(protect, getAllPosts);
+postRoutes.route("/").post(protect, createPost).get(getAllPosts);
+postRoutes.route("/:slug").get(getSinglePost);
 postRoutes
   .route("/:id")
-  .get(getSinglePost)
   .patch(updatePost)
   .delete(protect, restrict, deletePost);
 
